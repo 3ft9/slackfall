@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>SlackFall Instructions</title>
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	</head>
+	<body>
+		<div class="container">
+			<h1>SlackFall Instructions</h1>
+
+			<h2>Locations</h2>
+
+			<table width="100%%" style="border: 0;">
+				<tr>
+			{% for location in locations %}
+					<td width="20%" align="center" style="padding: 5px 3px;">{{ location }}</td>
+				{% if loop.index is divisibleby 5 %}
+				</tr>
+				<tr>
+				{% endif %}
+			{% endfor %}
+					</td>
+				</tr>
+			</table>
+
+			<h2>Commands</h2>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Command</th>
+						<th>Purpose &amp; Example</th>
+						<th>Notes</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><strong>deal</strong></td>
+						<td>
+							Starts a new game for the given time (in minutes) with the given users. Separate users with a space and make sure you <strong>DON'T</strong> include the @.<br />
+							<br />
+							<pre>deal 8 usera userb userc userd</pre>
+						</td>
+						<td><ul>
+							<li>This command will fail if there is already a game in progress.</li>
+							<li>The user sending the command will be added if they're not present.</li>
+							<li>The location and spy will be chosen at random and each player will get a direct message informing them of their role and, if not the spy, the location.</li>
+							<li>The timer will not start until the <em>start</em> command is issued by the dealer.</li>
+							<li>The bot will notify the channel of the time remaining once per minute, and at 30, 15 and 5 seconds left.</li>
+							<li>When the time runs out the game will end and the spy and location will be revealed.</li>
+						</ul></td>
+					</tr>
+					<tr>
+						<td><strong>start</strong></td>
+						<td>
+							Starts a game that has been dealt.<br />
+							<br />
+							<pre>start</pre>
+						</td>
+						<td><ul>
+							<li>This command will only be accepted from the dealer, and it is up to them to make sure all players are ready.</li>
+							<li>To change the set of players for a game that's been dealt but not started you can just use the <em>deal</em> command again.</li>
+						</ul></td>
+					</tr>
+					<tr>
+						<td><strong>abandon</strong></td>
+						<td>
+							Abandons the current game and reveals the location and spy.<br />
+							<br />
+							<pre>abandon</pre>
+						</td>
+						<td><ul>
+							<li>This command must be sent twice to confirm and may only be issued by the player who dealt the game.</li>
+							<li>The game will end and the spy and location will be revealed.</li>
+						</ul></td>
+					</tr>
+					<tr>
+						<td><strong>accuse</strong></td>
+						<td>
+							Accuse a user of being the spy.<br />
+							<br />
+							<pre>accuse userc</pre>
+						</td>
+						<td><ul>
+							<li>This command will pause the timer.</li>
+							<li>Do not include the @ in the username.</li>
+							<li>Following this command every other player must respond with <em>yes</em> or <em>no</em>.</li>
+							<li>The first <em>no</em> will resume the timer and questions can continue.</li>
+							<li>If all players vote yes the game will end and the spy and location will be revealed.</li>
+						</ul></td>
+					</tr>
+					<tr>
+						<td><strong>guess</strong></td>
+						<td>
+							Guess the location.<br />
+							<br />
+							<pre>guess hospital</pre>
+						</td>
+						<td><ul>
+							<li>This command will only be accepted from the spy.</li>
+							<li>The location names can be found at the top of these instructions and must be entered exactly as shown (case-insensitive).</li>
+							<li>If the location entered does not exist the bot will tell you and you should check you've spelt it correctly.</li>
+							<li>Since you've revealed yourself at this point you should issue the command again with the correct spelling as the game cannot continue.</li>
+							<li>Whether correct or not the game will end and both the spy and location will be revealed.</li>
+						</ul></td>
+					</tr>
+					<tr>
+						<td><strong>help</strong></td>
+						<td>
+							Replies with a link to this document.<br />
+							<br />
+							<pre>help</pre>
+						</td>
+						<td><ul>
+							<li>If you still need help, see <a href="https://en.wikipedia.org/wiki/Infinite_regress">here</a>.</li>
+						</ul></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
