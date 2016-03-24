@@ -25,6 +25,10 @@
 
 			<h2>Commands</h2>
 
+			<p>
+				Note that when specifying users in any command it's important that you don't prefix the username with an @ sign!
+			</p>
+
 			<table class="table">
 				<thead>
 					<tr>
@@ -35,15 +39,51 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td><strong>deal</strong></td>
+						<td><strong>init</strong></td>
 						<td>
-							Starts a new game for the given time (in minutes) with the given users. Separate users with a space and make sure you <strong>DON'T</strong> include the @.<br />
+							Initialises a new game with the given duration.<br />
 							<br />
-							<pre>deal 8 usera userb userc userd</pre>
+							<pre>!init 8</pre>
 						</td>
 						<td><ul>
 							<li>This command will fail if there is already a game in progress.</li>
-							<li>The user sending the command will be added if they're not present.</li>
+							<li>The user sending the command will be added to the player list if they're not already present.</li>
+						</ul></td>
+					</tr>
+					<tr>
+						<td><strong>join</strong></td>
+						<td>
+							Join an initialised game.<br />
+							<br />
+							<pre>!join</pre>
+						</td>
+						<td><ul>
+							<li>This command will fail if there is already a game in progress.</li>
+							<li>The user sending the command will be added to the player list if they're not already present.</li>
+						</ul></td>
+					</tr>
+					<tr>
+						<td><strong>leave</strong></td>
+						<td>
+							Leave an initialised game.<br />
+							<br />
+							<pre>!leave</pre>
+						</td>
+						<td><ul>
+							<li>This command will fail if there is already a game in progress or the game has already been dealt.</li>
+							<li>The user sending the command will be removed from the player list.</li>
+							<li>The user who initialised the game cannot leave it, they must !abandon it instead.</li>
+						</ul></td>
+					</tr>
+					<tr>
+						<td><strong>deal</strong></td>
+						<td>
+							Deals a game for the current player list.<br />
+							<br />
+							<pre>!deal</pre>
+						</td>
+						<td><ul>
+							<li>This command will fail if there is already a game in progress.</li>
 							<li>The location and spy will be chosen at random and each player will get a direct message informing them of their role and, if not the spy, the location.</li>
 							<li>The timer will not start until the <em>start</em> command is issued by the dealer.</li>
 							<li>The bot will notify the channel of the time remaining once per minute, and at 30, 15 and 5 seconds left.</li>
@@ -55,11 +95,12 @@
 						<td>
 							Starts a game that has been dealt.<br />
 							<br />
-							<pre>start</pre>
+							<pre>!start</pre>
 						</td>
 						<td><ul>
 							<li>This command will only be accepted from the dealer, and it is up to them to make sure all players are ready.</li>
 							<li>To change the set of players for a game that's been dealt but not started you can just use the <em>deal</em> command again.</li>
+							<li>The bot will display the location list when the game is started.</li>
 						</ul></td>
 					</tr>
 					<tr>
@@ -67,7 +108,7 @@
 						<td>
 							Abandons the current game and reveals the location and spy.<br />
 							<br />
-							<pre>abandon</pre>
+							<pre>!abandon</pre>
 						</td>
 						<td><ul>
 							<li>This command must be sent twice to confirm and may only be issued by the player who dealt the game.</li>
@@ -77,9 +118,9 @@
 					<tr>
 						<td><strong>accuse</strong></td>
 						<td>
-							Accuse a user of being the spy.<br />
+							Accuse a user of being the spy. Each player can only do this once per game.<br />
 							<br />
-							<pre>accuse userc</pre>
+							<pre>!accuse userc</pre>
 						</td>
 						<td><ul>
 							<li>This command will pause the timer.</li>
@@ -94,7 +135,7 @@
 						<td>
 							Guess the location.<br />
 							<br />
-							<pre>guess hospital</pre>
+							<pre>!guess hospital</pre>
 						</td>
 						<td><ul>
 							<li>This command will only be accepted from the spy.</li>
@@ -105,11 +146,22 @@
 						</ul></td>
 					</tr>
 					<tr>
+						<td><strong>locations</strong></td>
+						<td>
+							Replies with the location list.<br />
+							<br />
+							<pre>!locations</pre>
+						</td>
+						<td><ul>
+							<li>Requesting this during a game pretty much marks you as the spy!</li>
+						</ul></td>
+					</tr>
+					<tr>
 						<td><strong>help</strong></td>
 						<td>
 							Replies with a link to this document.<br />
 							<br />
-							<pre>help</pre>
+							<pre>!help</pre>
 						</td>
 						<td><ul>
 							<li>If you still need help, see <a href="https://en.wikipedia.org/wiki/Infinite_regress">here</a>.</li>
