@@ -62,6 +62,9 @@ class Game:
 	
 	def game_dealt(self):
 		return self._state in ['dealt', 'running', 'voting']
+		
+	def game_initialised(self):
+		return self._state in ['initialised']
 
 	def game_running(self):
 		return self._state in ['running', 'voting']
@@ -180,6 +183,8 @@ class Game:
 			return "There's already a game in progress. @%s can abandon the game with the abandon command." % self._dealer
 		if self.game_dealt():
 			return "The game has already been dealt. @%s can reset the game by issuing the !reset command." % self._dealer
+		if not self.game_initialised():
+			return "The game needs to be initialised with the !init command before you can join it!"
 		if not message['sender'] in self._players.keys():
 			if len(self._players.keys()) >= 8:
 				return "No more players can be added; 8 is the maximum. The game can be started by @%s issuing the !start command." % self._dealer
@@ -198,6 +203,8 @@ class Game:
 			return "There's already a game in progress. @%s can abandon the game with the abandon command." % self._dealer
 		if self.game_dealt():
 			return "The game has already been dealt. @%s can reset the game by issuing the !reset command." % self._dealer
+		if not self.game_initialised():
+			return "The game needs to be initialised with the !init command before you can leave it!"
 		if not message['sender'] in self._players.keys():
 			return "@%s is not in the players list!" % message['sender']
 		if message['sender'] == self._dealer:
