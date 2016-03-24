@@ -333,7 +333,7 @@ class Game:
 		return "Vote failed. The timer has been resumed with %s to go." % time_left
 	
 	def locations_cmd(self, message):
-		return "Locations: [%s]" % "] [!lo".join(sorted(self.get_locations()))
+		return "Locations: [%s]" % "] [".join(sorted(self.get_locations()))
 	
 	def guess_cmd(self, message):
 		if not self.game_running() or self.game_paused():
