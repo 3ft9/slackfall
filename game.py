@@ -174,8 +174,8 @@ class Game:
 			res = "Game reinitialised."
 		else:
 			res = "Game initialised."		
-		res = "%s %s" % (res, self.join_cmd(message))
 		self._state = 'initialised'
+		res = "%s %s" % (res, self.join_cmd(message))
 		return res
 	
 	def join_cmd(self, message):
@@ -265,7 +265,11 @@ class Game:
 			if self.game_dealt():
 				return "The game has been dealt but not started. You can deal again with the deal command."
 			else:
-				return "There is no game happening. Why not start one?"
+				if self.game_initialised():
+					if message['sender'] != self._dealer:
+						return "You cannot abandon this game, but you can reinitialise it with the !init command."
+				else:
+					return "There is no game happening. Why not start one?"
 		if message['sender'] != self._dealer:
 			return "Only @%s can use this command!" % self._dealer
 	
